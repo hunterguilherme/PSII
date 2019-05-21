@@ -3,6 +3,8 @@ package webService;
 import dataBase.ConexaoJavaDB;
 import aplicativo.AplicativoDAO;
 import aplicativo.AplicativoResource;
+import contaBancaria.ContaBancariaDAO;
+import contaBancaria.ContaBancariaResource;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.assets.AssetsBundle;
@@ -28,7 +30,8 @@ public class RestApp extends Application<Configuration> {
         ConexaoJavaDB conexao = new ConexaoJavaDB("Hunter", "hunter", "jdbc:derby://localhost", 1527, "psII");
         AplicativoDAO aplicativoDao = new AplicativoDAO(conexao);
         environment.jersey().register(new AplicativoResource(aplicativoDao));
-
+        ContaBancariaDAO contaBancariaDao = new ContaBancariaDAO(conexao);
+        environment.jersey().register(new ContaBancariaResource(contaBancariaDao));
         // Mapeia todos os WebServices para a rota base 
         // "http://localhost:8080/api/"
         environment.jersey().setUrlPattern("/api/*");
