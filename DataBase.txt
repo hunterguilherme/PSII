@@ -1,0 +1,18 @@
+Tabela Aplicativo:
+
+create table APLICATIVO (
+id bigint not null generated always as identity(start with 1, increment by 1),
+ nome varchar(200),
+ desenvolvedor varchar(200),
+ nDownloads int,
+primary key(id));
+
+
+Tabela ContaBancaria
+
+create table CONTABANCARIA(
+id bigint not null generated always as identity(start with 1, increment by 1),
+ nomeTitular varchar(200),
+ saldo double, 
+nAgencia int,
+primary key(id));
