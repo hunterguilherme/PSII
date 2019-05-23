@@ -16,6 +16,7 @@ public class AplicativoDAO {
     private PreparedStatement stmUpdate;
     private PreparedStatement stmDelete;
     private PreparedStatement stmRead;
+    private PreparedStatement stmReadId;
 
     @SuppressWarnings("CallToPrintStackTrace")
     public AplicativoDAO(ConexaoJavaDB conexao) {
@@ -27,10 +28,13 @@ public class AplicativoDAO {
             String sqlDelete = "Delete from aplicativo where id=?";
             String sqlRead = "Select*from aplicativo";
 
+            String sqlReadId = "Select*from aplicativo where id=?";
+            
             this.stmCreate = connect.prepareStatement(sqlCreate, Statement.RETURN_GENERATED_KEYS);
             this.stmUpdate = connect.prepareStatement(sqlUpdate);
             this.stmDelete = connect.prepareStatement(sqlDelete);
             this.stmRead = connect.prepareStatement(sqlRead);
+            this.stmReadId = connect.prepareStatement(sqlReadId);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,6 +47,27 @@ public class AplicativoDAO {
             List<Aplicativo> aplicativos = new ArrayList<>();
 
             while (rs.next()) {
+                Aplicativo aux = new Aplicativo();
+                aux.setNome(rs.getString("nome"));
+                aux.setDesenvolvedor(rs.getString("desenvolvedor"));
+                aux.setnDownloads(rs.getInt("nDownloads"));
+                aux.setId(rs.getLong("id"));
+                aplicativos.add(aux);
+            }
+            return aplicativos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<Aplicativo> readId(long id) {
+        try {
+
+             this.stmReadId.setLong(1, id);
+            ResultSet rs = this.stmReadId.executeQuery();
+            List<Aplicativo> aplicativos = new ArrayList<>();
+
+             while (rs.next()) {
                 Aplicativo aux = new Aplicativo();
                 aux.setNome(rs.getString("nome"));
                 aux.setDesenvolvedor(rs.getString("desenvolvedor"));

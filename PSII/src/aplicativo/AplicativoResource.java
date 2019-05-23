@@ -5,7 +5,7 @@ import javax.ws.rs.core.*;
 import io.dropwizard.jersey.params.*;
 import java.util.*;
 
-@Path("/Aplicativos")
+@Path("/aplicativos")
 @Produces(MediaType.APPLICATION_JSON)
 public class AplicativoResource {
 
@@ -46,5 +46,13 @@ public class AplicativoResource {
     public List<Aplicativo> read() {
         return dao.readAll();
     }
+    @GET
+    @Path("{id}")
+    public List<Aplicativo> read2(@PathParam("id") LongParam idParam) {
+        long id = idParam.get();
+
+         return dao.readId(id);
+
+     }
 
 }
