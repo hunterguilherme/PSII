@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>CRUD com Bootstrap 3</title>
+        <title>Projeto Programação de Sistemas II</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
@@ -25,11 +25,8 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">In&iacute;cio</a></li>
-                        <li><a href="#">Op&ccedil;&oacute;es</a></li>
-                        <li><a href="#">Perfil</a></li>
-                        <li><a href="#">Ajuda</a></li>
-                    </ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="CRUDConta.html">CRUD</a></li>
                 </div>
             </div>
         </nav>
@@ -38,22 +35,22 @@
 
             <div id="top" class="row">
                 <div class="col-sm-3">
-                    <h2>Itens</h2>
+                    <h2>Contas Bancarias</h2>
                 </div>
                 <div class="col-sm-6">
 
                     <div class="input-group h2">
-                        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar aplicativo por id">
+                        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar conta por id">
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" onclick="listarAplicativosId()">
+                            <button class="btn btn-primary" onclick="listarContasId()">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
                     </div>
                     <div class="input-group h2">
-                        <input name="data[search]" class="form-control" id="searchNome" type="text" placeholder="Pesquisar aplicativo por nome">
+                        <input name="data[search]" class="form-control" id="searchNome" type="text" placeholder="Pesquisar conta por nome do titular">
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" onclick="listarAplicativosNome()">
+                            <button class="btn btn-primary" onclick="listarContasNome()">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
@@ -61,7 +58,7 @@
 
                 </div>
                 <div class="col-sm-3">
-                    <a href="add.html" class="btn btn-primary pull-right h2">Novo Item</a>
+                    <a href="addConta.html" class="btn btn-primary pull-right h2">Nova Conta</a>
                 </div>
             </div> <!-- /#top -->
 
@@ -75,13 +72,13 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nome do Aplicativo</th>
-                                <th>Desenvolvedor</th>
-                                <th>Número de downloads</th>
+                                <th>Nome do Titular</th>
+                                <th>Saldo</th>
+                                <th>Número da agência</th>
                                 <th class="actions">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="aplicativos">
+                        <tbody id="contas">
                         </tbody>
                     </table>
                 </div>
@@ -101,31 +98,31 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+                        <h4 class="modal-title" id="modalLabel">Excluir Conta</h4>
                     </div>
                     <div class="modal-body">
                         <table>
                             <tr>
                             </tr>
                             <td>ID:</td>
-                            <td id="idApp"></td>
+                            <td id="idConta"></td>
                             <tr>
                                 <td>Nome:</td>
-                                <td id="nomeApp"></td>
+                                <td id="nomeConta"></td>
                             </tr>
                             <tr>
-                                <td>Desenvolvedor:</td>
-                                <td id="dev"></td>
+                                <td>Saldo:</td>
+                                <td id="saldo"></td>
                             </tr>
                             <tr>
-                                <td>Número de downloads:</td>
-                                <td id="nDown"></td>
+                                <td>Número da conta:</td>
+                                <td id="nAgen"></td>
                             </tr>
                         </table><br>
-                        Deseja realmente excluir este item?
+                        Deseja realmente excluir esta conta?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="apagarAplicativo()">Sim</button>
+                        <button type="button" class="btn btn-primary" onclick="apagarConta()">Sim</button>
                         <button type="button" class="btn btn-default"  data-dismiss="modal">N&atilde;o</button>
 
                     </div>
@@ -146,24 +143,24 @@
                             <tr>
                             </tr>
                             <td>ID:</td>
-                            <td id="idAppU"></td>
+                            <td id="idContaU"></td>
                             <tr>
                                 <td>Nome:</td>
-                                <td ><input type="text" id="nomeAppU"></td>
+                                <td ><input type="text" id="nomeContaU"></td>
                             </tr>
                             <tr>
-                                <td>Desenvolvedor:</td>
-                                <td><input type="text" id="devU"></td>
+                                <td>Saldo:</td>
+                                <td><input type="text" id="saldoU"></td>
                             </tr>
                             <tr>
-                                <td>Número de downloads:</td>
-                                <td><input type="text" id="downU"></td>
+                                <td>Número da agência:</td>
+                                <td><input type="text" id="agenU"></td>
                             </tr>
                         </table><br>
-                        Deseja realmente alterar este item?
+                        Deseja realmente alterar as informações dessa conta?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="atualizarAplicativo()">Sim</button>
+                        <button type="button" class="btn btn-primary" onclick="atualizarConta()">Sim</button>
                         <button type="button" class="btn btn-default"  data-dismiss="modal">N&atilde;o</button>
 
                     </div>
@@ -172,113 +169,110 @@
         </div>
 
         <script>
-            const corpoTabela = document.querySelector('#aplicativos');
+            const corpoTabela = document.querySelector('#contas');
             const paragrafoMensagem = document.querySelector('#mensagem');
 
-            const celulaNome = document.querySelector('#nomeApp');
-            const celulaDesenvolvedor = document.querySelector('#dev');
-            const celulanDownloads = document.querySelector('#nDown');
-            const celulaID = document.querySelector('#idApp');
+            const celulaNome = document.querySelector('#nomeConta');
+            const celulaSaldo = document.querySelector('#saldo');
+            const celulanAgencia = document.querySelector('#nAgen');
+            const celulaID = document.querySelector('#idConta');
 
-            const celulaIDU = document.querySelector('#idAppU');
-            const textoNome = document.querySelector('#nomeAppU');
-            const textoDesenvolvedor = document.querySelector('#devU');
-            const textoNDownloads = document.querySelector('#downU');
+            const celulaIDU = document.querySelector('#idContaU');
+            const textoNome = document.querySelector('#nomeContaU');
+            const textoSaldo = document.querySelector('#saldoU');
+            const textoNAgencia = document.querySelector('#agenU');
 
 
             const celulaSearch = document.querySelector('#search');
             const celulaSearchNome = document.querySelector('#searchNome');
 
             var search = celulaSearch.value;
-            function selecionarAplicativoU(id, nome, desenvolvedor, nDownloads) {
-                paragrafoMensagem.innerHTML = 'Altere os dados do aplicativo e pressione o botão Salvar.'
+            function selecionarContaU(id, nome, saldo, nAgencia) {
+                paragrafoMensagem.innerHTML = 'Altere os dados da conta e pressione o botão Salvar.'
 
 
                 celulaIDU.innerHTML = id;
                 textoNome.value = nome;
-                textoDesenvolvedor.value = desenvolvedor;
-                textoNDownloads.value = nDownloads;
+                textoSaldo.value = saldo;
+                textoNAgencia.value = nAgencia;
 
             }
 
-            function selecionarAplicativo(id, nome, desenvolvedor, nDownloads) {
+            function selecionarConta(id, nome, saldo, nAgencia) {
                 celulaID.innerHTML = id;
                 celulaNome.innerHTML = nome;
-                celulaDesenvolvedor.innerHTML = desenvolvedor;
-                celulanDownloads.innerHTML = nDownloads;
+                celulaSaldo.innerHTML = saldo;
+                celulanAgencia.innerHTML = nAgencia;
                 textoNome.value = nome;
-                textoDesenvolvedor.value = desenvolvedor;
-                textoNDownloads.value = nDownloads;
+                textoSaldo.value = saldo;
+                textoNAgencia.value = nAgencia;
 
             }
 
 
 
-            async function apagarAplicativo() {
+            async function apagarConta() {
                 if (celulaID.innerHTML == '')
                     return;
                 const ID = celulaID.innerHTML;
-                const URL = `/api/aplicativos/${ID}`;
+                const URL = `/api/contabancaria/${ID}`;
                 const deleteRequest = {
                     method: 'DELETE'
                 };
                 try {
-                    fetch(URL, deleteRequest).then(resposta => listarTodosAplicativos());
+                    fetch(URL, deleteRequest).then(resposta => listarTodasContas());
                     $('#delete-modal').modal('hide');
                 } catch (e) {
                     corpoTabela.innerHTML = e;
                 }
             }
 
-            async function atualizarAplicativo() {
+            async function atualizarConta() {
                 if (celulaIDU.innerHTML == '')
                     return;
                 const ID = celulaIDU.innerHTML;
-                const URL = `/api/aplicativos/${ID}`;
-                const dadosAplicativo = {
+                const URL = `/api/contabancaria/${ID}`;
+                const dadosConta = {
                     'id': ID,
-                    'nome': textoNome.value,
-                    'desenvolvedor': textoDesenvolvedor.value,
-                    'nDownloads': textoNDownloads.value
+                    'nomeTitular': textoNome.value,
+                    'saldo': textoSaldo.value,
+                    'nAgencia': textoNAgencia.value
 
                 };
 
                 const putRequest = {
                     method: 'PUT',
-                    body: JSON.stringify(dadosAplicativo),
+                    body: JSON.stringify(dadosConta),
                     headers: {
                         'Content-type': 'application/json;charset=UTF-8'
                     }
                 };
                 try {
-                    fetch(URL, putRequest).then(response => listarTodosAplicativos());
+                    fetch(URL, putRequest).then(response => listarTodasContas());
                     $('#update-modal').modal('hide');
                 } catch (e) {
                     corpoTabela.innerHTML = e;
                 }
             }
-            function preencherTabela(aplicativos) {
+            function preencherTabela(contas) {
                 var linhasTabela = '';
-                var n = aplicativos.length;
+                var n = contas.length;
                 for (var i = 0; i < n; i++) {
-                    var aplicativo = aplicativos[i];
-                    linhasTabela +=
-                            `<tr><td><a href="javascript:void(0)"  data-toggle="modal" data-target="#update-modal" onclick="selecionarAplicativoU('${aplicativo.id}','${aplicativo.nome}','${aplicativo.desenvolvedor}','${aplicativo.nDownloads}')">` +
-                            aplicativo.id + '</a></td>' +
-                            '<td>' + aplicativo.nome + '</td>' +
-                            '<td>' + aplicativo.desenvolvedor + '</td>' +
-                            '<td>' + aplicativo.nDownloads + '</td>' +
-                            `<td><a class="btn btn-warning btn-xs" href="javascript:void(0)" data-toggle="modal" data-target="#update-modal" onclick="selecionarAplicativoU('${aplicativo.id}','${aplicativo.nome}','${aplicativo.desenvolvedor}','${aplicativo.nDownloads}')">Editar` +
-                            `<a class="btn btn-danger btn-xs" href="javascript:void(0)" data-toggle="modal" data-target="#delete-modal" onclick="selecionarAplicativo('${aplicativo.id}','${aplicativo.nome}','${aplicativo.desenvolvedor}','${aplicativo.nDownloads}')">Excluir` +
+                    var conta = contas[i];
+                    linhasTabela += '<tr><td>' + conta.id + '</td>' +
+                            '<td>' + conta.nomeTitular + '</td>' +
+                            '<td>' + conta.saldo + '</td>' +
+                            '<td>' + conta.nAgencia + '</td>' +
+                            `<td><a class="btn btn-warning btn-xs" href="javascript:void(0)" data-toggle="modal" data-target="#update-modal" onclick="selecionarContaU('${conta.id}','${conta.nomeTitular}','${conta.saldo}','${conta.nAgencia}')">Editar ` +
+                            `<a class="btn btn-danger btn-xs" href="javascript:void(0)" data-toggle="modal" data-target="#delete-modal" onclick="selecionarConta('${conta.id}','${conta.nomeTitular}','${conta.saldo}','${conta.nAgencia}')">Excluir` +
                             '</a></td>\n';
                 }
                 corpoTabela.innerHTML = linhasTabela;
-
             }
 
-            async function listarAplicativosId() {
+            async function listarContasId() {
                 const ID = celulaSearch.value;
-                const URL = `/api/aplicativos/${ID}`
+                const URL = `/api/contabancaria/${ID}`
                 try {
                     fetch(URL).then(resposta => resposta.json()).then(jsonResponse => preencherTabela(jsonResponse));
                 } catch (e) {
@@ -286,25 +280,24 @@
                 }
             }
 
-            async function listarAplicativosNome() {
+            async function listarContasNome() {
                 const NOME = celulaSearchNome.value;
-                const URL = `/api/aplicativos/nome/${NOME}`
+                const URL = `/api/contabancaria/nome/${NOME}`
                 try {
                     fetch(URL).then(resposta => resposta.json()).then(jsonResponse => preencherTabela(jsonResponse));
                 } catch (e) {
                     corpoTabela.innerHTML = e;
                 }
             }
-
-            async function listarTodosAplicativos() {
-                const URL = `/api/aplicativos`;
+            async function listarTodasContas() {
+                const URL = `/api/contabancaria`;
                 try {
                     fetch(URL).then(resposta => resposta.json()).then(jsonResponse => preencherTabela(jsonResponse));
                 } catch (e) {
                     corpoTabela.innerHTML = e;
                 }
             }
-            listarTodosAplicativos();
+            listarTodasContas();
         </script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
