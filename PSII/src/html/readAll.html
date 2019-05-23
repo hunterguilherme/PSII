@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CRUD com Bootstrap 3</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Hunter && Hay</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">In&iacute;cio</a></li>
+                        <li><a href="#">Op&ccedil;&oacute;es</a></li>
+                        <li><a href="#">Perfil</a></li>
+                        <li><a href="#">Ajuda</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="main" class="container-fluid" style="margin-top: 50px">
+
+            <div id="top" class="row">
+                <div class="col-sm-3">
+                    <h2>Itens</h2>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="input-group h2">
+                        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Itens">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="col-sm-3">
+                    <a href="add.html" class="btn btn-primary pull-right h2">Novo Item</a>
+                </div>
+            </div> <!-- /#top -->
+
+
+            <hr />
+            <div id="list" class="row">
+
+                <div class="table-responsive col-md-12">
+                    <p style="font-weight:bold" id="mensagem"></p>
+                    <table class="table table-striped" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome do Aplicativo</th>
+                                <th>Desenvolvedor</th>
+                                <th>Número de downloads</th>
+                                <th class="actions">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aplicativos">
+                        </tbody>
+                    </table>
+                </div>
+
+            </div> <!-- /#list -->
+
+            <div id="bottom" class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div> <!-- /#bottom -->
+        </div> <!-- /#main -->
+
+        <!-- Modal Delete-->
+        <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                            </tr>
+                            <td>ID:</td>
+                            <td id="idApp"></td>
+                            <tr>
+                                <td>Nome:</td>
+                                <td id="nomeApp"></td>
+                            </tr>
+                            <tr>
+                                <td>Desenvolvedor:</td>
+                                <td id="dev"></td>
+                            </tr>
+                            <tr>
+                                <td>Número de downloads:</td>
+                                <td id="nDown"></td>
+                            </tr>
+                        </table><br>
+                        Deseja realmente excluir este item?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="apagarAplicativo()">Sim</button>
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">N&atilde;o</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Update-->
+        <div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalLabel">Update Aplicativo</h4>
+                    </div>
+                    <div class="modal-body">
+                         <table>
+                            <tr>
+                            </tr>
+                            <td>ID:</td>
+                            <td id="idAppU"></td>
+                            <tr>
+                                <td>Nome:</td>
+                                <td ><input type="text" id="nomeAppU"></td>
+                            </tr>
+                            <tr>
+                                <td>Desenvolvedor:</td>
+                                <td><input type="text" id="devU"></td>
+                            </tr>
+                            <tr>
+                                <td>Número de downloads:</td>
+                                <td><input type="text" id="downU"></td>
+                            </tr>
+                        </table><br>
+                        Deseja realmente alterar este item?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="atualizarAplicativo()">Sim</button>
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">N&atilde;o</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const corpoTabela = document.querySelector('#aplicativos');
+            const paragrafoMensagem = document.querySelector('#mensagem');
+            
+            const celulaNome = document.querySelector('#nomeApp');
+            const celulaDesenvolvedor = document.querySelector('#dev');
+            const celulanDownloads = document.querySelector('#nDown');
+            const celulaID = document.querySelector('#idApp');
+
+            const celulaIDU = document.querySelector('#idAppU');
+            const textoNome = document.querySelector('#nomeAppU');
+            const textoDesenvolvedor = document.querySelector('#devU');
+            const textoNDownloads = document.querySelector('#downU');
+
+       function selecionarAplicativoU(id, nome, desenvolvedor, nDownloads) {  
+           paragrafoMensagem.innerHTML = 'Altere os dados do aplicativo e pressione o botão Salvar.'
+
+           
+                celulaIDU.innerHTML = id;
+                textoNome.value = nome;
+                textoDesenvolvedor.value = desenvolvedor;
+                textoNDownloads.value = nDownloads;
+
+            }
+
+            function selecionarAplicativo(id, nome, desenvolvedor, nDownloads) {
+                celulaID.innerHTML = id;
+                celulaNome.innerHTML = nome;
+                celulaDesenvolvedor.innerHTML = desenvolvedor;
+                celulanDownloads.innerHTML = nDownloads;
+                textoNome.value = nome;
+                textoDesenvolvedor.value = desenvolvedor;
+                textoNDownloads.value = nDownloads;
+
+            }
+
+
+
+            async function apagarAplicativo() {
+                if (celulaID.innerHTML == '')
+                    return;
+                const ID = celulaID.innerHTML;
+                const URL = `/api/aplicativos/${ID}`;
+                const deleteRequest = {
+                    method: 'DELETE'
+                };
+                try {
+                    fetch(URL, deleteRequest).then(resposta => listarTodosAplicativos());
+                    $('#delete-modal').modal('hide');
+                } catch (e) {
+                    corpoTabela.innerHTML = e;
+                }
+            }
+
+            async function atualizarAplicativo() {
+                if (celulaIDU.innerHTML == '')
+                    return;
+                const ID = celulaIDU.innerHTML;
+                const URL = `/api/aplicativos/${ID}`;
+                const dadosAplicativo = {
+                    'id': ID,
+                    'nome': textoNome.value,
+                    'desenvolvedor': textoDesenvolvedor.value,
+                    'nDownloads': textoNDownloads.value
+
+                };
+
+                const putRequest = {
+                    method: 'PUT',
+                    body: JSON.stringify(dadosAplicativo),
+                    headers: {
+                        'Content-type': 'application/json;charset=UTF-8'
+                    }
+                };
+                try {
+                    fetch(URL, putRequest).then(response => listarTodosAplicativos());
+                    $('#update-modal').modal('hide');
+                } catch (e) {
+                    corpoTabela.innerHTML = e;
+                }
+            }
+            function preencherTabela(aplicativos) {
+                var linhasTabela = '';
+                var n = aplicativos.length;
+                for (var i = 0; i < n; i++) {
+                    var aplicativo = aplicativos[i];
+                    linhasTabela +=
+                            `<tr><td><a href="javascript:void(0)"  data-toggle="modal" data-target="#update-modal" onclick="selecionarAplicativoU('${aplicativo.id}','${aplicativo.nome}','${aplicativo.desenvolvedor}','${aplicativo.nDownloads}')">` +
+                            aplicativo.id + '</a></td>' +
+                            '<td>' + aplicativo.nome + '</td>' +
+                            '<td>' + aplicativo.desenvolvedor + '</td>' +
+                            '<td>' + aplicativo.nDownloads + '</td>' +
+                            `<td><a class="btn btn-warning btn-xs" href="javascript:void(0)" data-toggle="modal" data-target="#update-modal" onclick="selecionarAplicativoU('${aplicativo.id}','${aplicativo.nome}','${aplicativo.desenvolvedor}','${aplicativo.nDownloads}')">Editar` +
+                            `<a class="btn btn-danger btn-xs" href="javascript:void(0)" data-toggle="modal" data-target="#delete-modal" onclick="selecionarAplicativo('${aplicativo.id}','${aplicativo.nome}','${aplicativo.desenvolvedor}','${aplicativo.nDownloads}')">Excluir` +
+                            '</a></td>\n';
+                }
+
+                corpoTabela.innerHTML = linhasTabela;
+            }
+            async function listarTodosAplicativos() {
+                const URL = `/api/aplicativos`;
+                try {
+                    fetch(URL).then(resposta => resposta.json()).then(jsonResponse => preencherTabela(jsonResponse));
+                } catch (e) {
+                    corpoTabela.innerHTML = e;
+                }
+            }
+            listarTodosAplicativos();
+        </script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
