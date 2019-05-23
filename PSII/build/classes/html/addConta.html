@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>CRUD com Bootstrap 3</title>
+
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+   <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+     <span class="sr-only">Toggle navigation</span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Hunter && Hay</a>
+   </div>
+   <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="CRUDConta.html">CRUD</a></li>
+    </ul>
+   </div>
+  </div>
+ </nav>
+
+ <div id="main" class="container-fluid">
+
+  <h3 class="page-header">Adicionar Conta Bancária</h3>
+
+  <form action="index.html">
+  	<div class="row">
+  	  <div class="form-group col-md-4">
+  	  	<label for="exampleInputEmail1">Nome do titular</label>
+  	  	<input type="text" class="form-control" id="txtNome" placeholder="Digite o nome do titular">
+  	  </div>
+	</div>
+
+	<div class="row">
+  	  <div class="form-group col-md-3">
+  	  	<label for="exampleInputEmail1">Saldo</label>
+  	  	<input type="text" class="form-control" id="txtSaldo" placeholder="Digite o valor do Saldo">
+  	  </div>
+	</div>
+<div class="row">
+  	  <div class="form-group col-md-3">
+  	  	<label for="exampleInputEmail1">Número da agência</label>
+  	  	<input type="text" class="form-control" id="txtNAgencia" placeholder="Digite o Número da agência">
+  	  </div>
+	<hr />
+
+	<div class="row">
+	  <div class="col-md-12">
+	  	<button type="button" class="btn btn-primary" onclick="criarConta()">Salvar</button>
+		<a href="addConta.html" class="btn btn-default">Cancelar</a>
+	  </div>
+	</div>
+          <p style="font-weight:bold" id="mensagem"></p>
+
+  </form>
+
+ </div>
+ <script>
+     const textoNome = document.querySelector('#txtNome');
+     const textoSaldo= document.querySelector('#txtSaldo');
+     const textoNAgencia= document.querySelector('#txtNAgencia');
+
+     const paragrafoMensagem = document.querySelector('#mensagem');
+
+     function mostrarMensagem(contaCadastrada) {
+     textoNome.value = '';
+     textoSaldo.value = '';
+     textoNAgencia.value = '';
+
+     paragrafoMensagem.innerHTML = 'Conta Bancaria criada com id ' + contaCadastrada.id;
+     }
+
+     async function criarConta() {
+     const URL = `/api/contabancaria`;
+     const dadosConta = {
+     'nomeTitular': textoNome.value,
+     'saldo': textoSaldo.value,
+     'nAgencia': textoNAgencia.value
+
+     };
+     const postRequest = {
+     method: 'POST',
+     body: JSON.stringify(dadosConta),
+     headers: {
+     'Content-type': 'application/json;charset=UTF-8'
+     }
+     };
+     try {
+     fetch(URL, postRequest).then(resposta => resposta.json()).then(jsonResponse => mostrarMensagem(jsonResponse));
+     } catch (e) {
+     paragrafoMensagem.innerHTML = e;
+     }
+     }
+ </script>
+
+</body>
+</html>

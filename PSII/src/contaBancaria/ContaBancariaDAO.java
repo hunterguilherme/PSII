@@ -84,27 +84,27 @@ public class ContaBancariaDAO {
         return null;
     }
 
-//    public List<ContaBancaria> readNome(String nome) {
-//        try {
-//
-//            this.stmRNome.setString(1, nome);
-//            ResultSet rs = this.stmRNome.executeQuery();
-//            List<ContaBancaria> contasBancarias = new ArrayList<>();
-//
-//            while (rs.next()) {
-//                ContaBancaria aux = new ContaBancaria();
-//                aux.setNomeTitular(rs.getString("nomeTitular"));
-//                aux.setSaldo(rs.getDouble("saldo"));
-//                aux.setnAgencia(rs.getInt("nAgencia"));
-//                aux.setId(rs.getLong("id"));
-//                contasBancarias.add(aux);
-//            }
-//            return contasBancarias;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    public List<ContaBancaria> readNome(String nome) {
+        try {
+
+            this.stmRNome.setString(1, nome);
+            ResultSet rs = this.stmRNome.executeQuery();
+            List<ContaBancaria> contasBancarias = new ArrayList<>();
+
+            while (rs.next()) {
+                ContaBancaria aux = new ContaBancaria();
+                aux.setNomeTitular(rs.getString("nomeTitular"));
+                aux.setSaldo(rs.getDouble("saldo"));
+                aux.setnAgencia(rs.getInt("nAgencia"));
+                aux.setId(rs.getLong("id"));
+                contasBancarias.add(aux);
+            }
+            return contasBancarias;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public ContaBancaria create(ContaBancaria cb) {
         try {

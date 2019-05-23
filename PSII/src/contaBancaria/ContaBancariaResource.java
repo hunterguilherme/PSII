@@ -5,7 +5,7 @@ import javax.ws.rs.core.*;
 import io.dropwizard.jersey.params.*;
 import java.util.*;
 
-@Path("/ContaBancaria")
+@Path("/contabancaria")
 @Produces(MediaType.APPLICATION_JSON)
 public class ContaBancariaResource {
 
@@ -56,12 +56,12 @@ public class ContaBancariaResource {
         
     }
     
-//    @GET
-//    @Path("{nomeTitular}")
-//    public List<ContaBancaria> read3(@PathParam("nomeTitular") String nomeTitular) {
-//        String nome = nomeTitular;
-//        return dao.readNome(nome);
-//
-//    }
+    @GET
+    @Path("nome/{nomeTitular}")
+    public List<ContaBancaria> read3(@PathParam("nomeTitular") String nomeTitular) {
+        String nome = nomeTitular;
+        return dao.readNome(nome);
+
+    }
 
 }
