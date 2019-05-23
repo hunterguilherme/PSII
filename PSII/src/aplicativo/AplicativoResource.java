@@ -46,13 +46,20 @@ public class AplicativoResource {
     public List<Aplicativo> read() {
         return dao.readAll();
     }
+
     @GET
     @Path("{id}")
     public List<Aplicativo> read2(@PathParam("id") LongParam idParam) {
         long id = idParam.get();
 
-         return dao.readId(id);
+        return dao.readId(id);
+    }
+        @GET
+        @Path("nome/{nome}")
+        public List<Aplicativo> read3(@PathParam("nome") String nome) {
 
-     }
+            return dao.readNome(nome);
 
-}
+        }
+
+    }
